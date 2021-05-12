@@ -7,9 +7,64 @@ export default new Vuex.Store({
   state: {
   },
   mutations: {
+    SET_PROPERTY: (state, payload) => {
+      Vue.set(payload.object, payload.propertyName, payload.value)
+    }
   },
   actions: {
+    async GET_TRENDING_NEWS(context) {
+      const { value: data } = await (await fetch("https://bing-news-search1.p.rapidapi.com/news/trendingtopics?safeSearch=Off&textFormat=Raw", {
+        "method": "GET",
+        "headers": {
+          "x-bingapis-sdk": "true",
+          "x-rapidapi-key": "ed3aafb9c3msh3f75adc9d88654ap11b896jsn37389a373242",
+          "x-rapidapi-host": "bing-news-search1.p.rapidapi.com"
+        }
+      })).json()
+
+      const trending = data.map((item) => {
+        return { name: item.name, url: item.webSearchUrl}
+      })
+      console.log(context, 'trending', trending)
+
+      context.commit('SET_PROPERTY', {
+        object: context.state,
+        propertyName: 'trending',
+        value: trending
+      })
+      console.log(context.state.trending)
+    },
+
+    async GET_CATEGORIES(context) {
+      const { value: data } = await (await fetch("https://bing-news-search1.p.rapidapi.com/news?textFormat=Raw&safeSearch=Off", {
+        "method": "GET",
+        "headers": {
+          "x-bingapis-sdk": "true",
+          "x-rapidapi-key": "ed3aafb9c3msh3f75adc9d88654ap11b896jsn37389a373242",
+          "x-rapidapi-host": "bing-news-search1.p.rapidapi.com"
+        }
+      })).json()
+      const categories = data.map((item,index) => {
+        console.log(index)
+        return { 
+          name: item.name,
+          url: item.url,
+          img: item.image?.thumbnail.contentUrl ?? '',
+          description: item.description,
+          date: item.datePublished
+        }
+      })
+      console.log(context, 'categories', categories)
+
+      context.commit('SET_PROPERTY', {
+        object: context.state,
+        propertyName: 'categories',
+        value: categories
+      })
+      console.log(context.state.categories)
+    }
   },
+
   modules: {
   }
 })
