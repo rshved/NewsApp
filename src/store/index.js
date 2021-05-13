@@ -5,14 +5,20 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    loader: false,
+    
   },
   mutations: {
     SET_PROPERTY: (state, payload) => {
       Vue.set(payload.object, payload.propertyName, payload.value)
+    },
+    LOADER:(state,payload) => {
+      state.loader=payload
     }
   },
   actions: {
     async GET_TRENDING_NEWS(context) {
+      context.commit('LOADER', true)
       const { value: data } = await (await fetch("https://bing-news-search1.p.rapidapi.com/news/trendingtopics?safeSearch=Off&textFormat=Raw", {
         "method": "GET",
         "headers": {
@@ -33,9 +39,11 @@ export default new Vuex.Store({
         value: trending
       })
       console.log(context.state.trending)
+      context.commit('LOADER', false)
     },
 
     async GET_CATEGORIES(context) {
+      context.commit('LOADER', true)
       const { value: data } = await (await fetch("https://bing-news-search1.p.rapidapi.com/news?textFormat=Raw&safeSearch=Off", {
         "method": "GET",
         "headers": {
@@ -61,7 +69,8 @@ export default new Vuex.Store({
         propertyName: 'categories',
         value: categories
       })
-      console.log(context.state.categories)
+      
+      context.commit('LOADER', false)
     }
   },
 

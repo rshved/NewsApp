@@ -1,6 +1,6 @@
 <template>
   
-  <v-container class="mx-auto main-container ma-0">
+  <v-container class="mx-auto main-container ">
     
     <v-card
     class="custom-card"
@@ -11,6 +11,7 @@
     
   ><a :href="item.url" class="card-link">
     <v-img
+      class="card-img"
       :src="item.img"
       height="150px"
     ></v-img>
@@ -18,12 +19,12 @@
     <v-card-title
       class="card-name"
     >
-      {{item.name | lengthLimiter}}
+      {{item.name | lengthLimiter | nameLength}}
     </v-card-title>
 
     <v-card-subtitle class="cards-description"
     >
-      {{ item.description }}
+      {{ item.description}}...
     </v-card-subtitle>
     
     <v-container class="cards-bottom">
@@ -86,6 +87,11 @@ export default {
       if (!value) return ''
       value = value.toString()
       return value.slice(0,10)
+    },
+    nameLength: function (value) {
+      if (!value) return ''
+      value = value.toString()
+      return value.slice(0,68)
     }
   },
   methods:{
@@ -101,7 +107,7 @@ export default {
 </script>
 
 <style scoped>
-
+ 
 .card-link{
   text-decoration: none;
   color:black;
@@ -112,6 +118,9 @@ export default {
     font-size: 16px;
     line-height: 1.5;
   }
+  .card-img{
+    display: block;
+  }
   .custom-card{
     display: inline-flex;
     margin: 12px;
@@ -120,10 +129,12 @@ export default {
   }
   .custom-card:first-child{
     display: block;
-    width: 97%  !important;
+    width: 99%  !important;
     height: 300px;
+    margin-bottom: 30px;
+    padding-bottom: 0;
   }
-  .custom-card:nth-child(3n) {
+  .custom-card:nth-child(3n+1) {
     margin-right: 0;
   }
   .publication-date{
@@ -134,19 +145,23 @@ export default {
   .cards-bottom{
     display: inline-flex;
     justify-content: space-between;
-    top: 89%;
+    top: 87%;
     left: 0;
     position: absolute;
-
-    
+    margin-top: 2px;
+    padding-bottom: 0;
   }
   .cards-description{
     margin-bottom: 5px;
     padding-bottom: 0;
     
+  
   }
   .read-more{
     text-decoration: none;
     color: black;
+  }
+  .read-more:hover{
+    color:darkblue
   }
 </style>

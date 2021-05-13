@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <main >
+    <main>
       <v-toolbar class="pa-0 mb-4" flat>
         <!-- <v-container
       class="d-inline-flex"
@@ -122,7 +122,47 @@
       >
         <v-icon color="#000">mdi-arrow-up-bold-circle-outline</v-icon>
       </v-btn>
+      <v-footer
+        light
+        class="custom-footer"
+        padless
+      >
+    <v-card
+      class="flex custom-footer"
+      flat
+      tile
+      light
+    >
+      <v-card-title class="white">
+        <strong class="footer-heading pl-3">Get connected with us on social networks!</strong>
+
+        <v-spacer></v-spacer>
+        <a :href="icon.href" class="socials"
+          v-for="icon in icons"
+          :key="icon.href"
+         >
+          <v-btn
+          
+          class="mx-auto"
+          dark
+          icon
+          color="black"
+        >
+          <v-icon size="24px">
+            {{ icon.url }}
+          </v-icon>
+        </v-btn>
+        </a>
+        
+      </v-card-title>
+
+      <v-card-text class="py-2 black--text text-center">
+       <strong> {{ new Date().getFullYear() }} — </strong><strong>News App copyright all rights reserved</strong>
+      </v-card-text>
+    </v-card>
+      </v-footer>
     </main>
+    <loader></loader>
   </v-app>
 </template>
 
@@ -131,17 +171,35 @@ import "vue-burger-button/dist/vue-burger-button.css";
 import Vue from "vue";
 import BurgerButton from "vue-burger-button";
 import { mapActions, mapState } from "vuex";
+import Loader from '@/components/Loader'
+
+
 
 
 Vue.component("burger-button", BurgerButton);
 export default {
   name: "App",
+  components:{Loader},
   data: () => ({
     // options: ['home', 'articles'],
     // selected: undefined,
     isActive: false,
     show: true,
     fab: false,
+    icons: [
+      {
+        href: 'https://www.linkedin.com/company/techstack-limited/?utm_source=ts_website&utm_medium=link&utm_campaign=ts_website_linkedin&utm_term=linkedin&utm_content=linkedin',
+        url:'mdi-linkedin',
+      },
+      {
+        href: 'https://www.facebook.com/techstack/?utm_source=ts_website&utm_medium=link&utm_campaign=ts_website_facebook&utm_term=facebook&utm_content=facebook',
+        url:'mdi-facebook',
+      },
+      {
+        href: 'https://www.instagram.com/techstack_ltd/?utm_source=ts_website&utm_medium=link&utm_campaign=ts_website_instagram&utm_term=instagram&utm_content=instagram',
+        url:'mdi-instagram',
+      }
+    ],
     
   }),
   computed: {
@@ -179,7 +237,8 @@ export default {
   },
   mounted() {
     this.getNews(), this.getCategories();
-  }
+  },
+  
 };
 </script>
 
@@ -232,5 +291,15 @@ main {
 }
 .burger {
   margin-left: 10px;
+}
+.custom-footer{
+  border-top: 1px solid black;
+}
+.footer-heading{
+  color: #000;
+  
+}
+.socials{
+  text-decoration: none;
 }
 </style>
