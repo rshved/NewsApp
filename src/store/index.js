@@ -23,7 +23,7 @@ export default new Vuex.Store({
         "method": "GET",
         "headers": {
           "x-bingapis-sdk": "true",
-          "x-rapidapi-key": "ed3aafb9c3msh3f75adc9d88654ap11b896jsn37389a373242",
+          "x-rapidapi-key": "e9ca6f3dd3msh6702b60fe970ca0p16a9f0jsn2e2f896db587",
           "x-rapidapi-host": "bing-news-search1.p.rapidapi.com"
         }
       })).json()
@@ -48,7 +48,7 @@ export default new Vuex.Store({
         "method": "GET",
         "headers": {
           "x-bingapis-sdk": "true",
-          "x-rapidapi-key": "ed3aafb9c3msh3f75adc9d88654ap11b896jsn37389a373242",
+          "x-rapidapi-key": "e9ca6f3dd3msh6702b60fe970ca0p16a9f0jsn2e2f896db587",
           "x-rapidapi-host": "bing-news-search1.p.rapidapi.com"
         }
       })).json()
@@ -57,7 +57,7 @@ export default new Vuex.Store({
         return { 
           name: item.name,
           url: item.url,
-          img: item.image?.thumbnail.contentUrl ?? '',
+          img: item.image?.thumbnail.contentUrl ?? 'https://www.thermaxglobal.com/wp-content/uploads/2020/05/image-not-found.jpg',
           description: item.description,
           date: item.datePublished
         }
